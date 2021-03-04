@@ -1,5 +1,7 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,24 +13,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class MemberRepositoryTest {
-
-    @Autowired MemberRepository memberRepository;
-
-    @Test
-    @Transactional
-    @Rollback(false)
-    public void testMember() throws Exception {
-        Member member = new Member();
-        member.setUsername("memberA");
-
-        Long savedId = memberRepository.save(member);
-        Member findMember = memberRepository.find(savedId);
-
-        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        Assertions.assertThat(findMember).isEqualTo(member);
-    }
-}
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class MemberRepositoryTest {
+//
+//    @Autowired
+//    MemberRepository memberRepository;
+//
+//    @Test
+//    @Transactional
+//    @Rollback(false)
+//    public void testMember() throws Exception {
+//        Member member = new Member();
+//        member.setUsername("memberA");
+//
+//        Long savedId = memberRepository.save(member);
+//        Member findMember = memberRepository.find(savedId);
+//
+//        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
+//        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
+//        Assertions.assertThat(findMember).isEqualTo(member);
+//    }
+//}
