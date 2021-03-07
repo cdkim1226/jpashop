@@ -57,23 +57,6 @@ public class OrderServiceTest {
 
     }
 
-    private Book createBook(String name, int price, int stockQuantity) {
-        Book book = new Book();
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(stockQuantity);
-        em.persist(book);
-        return book;
-    }
-
-    private Member createMember() {
-        Member member = new Member();
-        member.setName("회원1");
-        member.setAddress(new Address("서울", "강가", "123-123"));
-        em.persist(member);
-        return member;
-    }
-
     @Test(expected = NotEnoughStockException.class)
     public void 상품주문_재고수량초과() throws Exception {
         //given
@@ -112,6 +95,21 @@ public class OrderServiceTest {
         Assert.assertEquals("주문이 취소된 상품은 그만큼 재고가 중가해야 한다.",10,item.getStockQuantity());
 
     }
+    private Book createBook(String name, int price, int stockQuantity) {
+        Book book = new Book();
+        book.setName(name);
+        book.setPrice(price);
+        book.setStockQuantity(stockQuantity);
+        em.persist(book);
+        return book;
+    }
 
+    private Member createMember() {
+        Member member = new Member();
+        member.setName("회원1");
+        member.setAddress(new Address("서울", "강가", "123-123"));
+        em.persist(member);
+        return member;
+    }
 
 }
