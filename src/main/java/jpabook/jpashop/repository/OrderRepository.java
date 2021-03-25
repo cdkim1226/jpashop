@@ -2,8 +2,6 @@ package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -48,21 +46,31 @@ public class OrderRepository {
         return query.getResultList();
     }
 
-    public List<Order> findAllWithMemberDelivery() {
+    public List<Order> findAllWithItem() {
         return em.createQuery(
-                "select o from Order o" +
-                        "join fetch o.member m" +
-                        "join fetch o.delivery d", Order.class
-        ).getResultList();
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
     }
-    public List<OrderSimpleQueryDto> findOrderDtos() {
+
+    public List<SimpleOrderQueryDto> findOrderDtos() {
         return em.createQuery(
                 "select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address)" +
-                        "from Order o"
+                        "from Order o" +
                         "join o.member m" +
-                        "join o.delivery d", OrderSimpleQueryDto.class)
+                        "join o.delivery d", SimpleOrderQueryDto.class)
                 .getResultList();
     }
 
 
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
 }
